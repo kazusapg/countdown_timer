@@ -2,9 +2,11 @@
 # TODO:残り時間の表示
 
 import argparse
-import pygame
 import time
 import sys
+import os
+import pygame
+
 
 class CountDownTimer:
 
@@ -12,8 +14,31 @@ class CountDownTimer:
         self.minutes = minutes
         self.mp3_file_path = mp3_filepath
 
+    def validate_arg_minutes(self):
+        """引数の時間をチェック"""
+        if not type(self.minutes) == int:
+            return False
+        if self.minutes < 0:
+            return False
+        return True
+
+    def validate_arg_mp3_filepath(self):
+        """引数のmp3ファイルをチェック"""
+        if self.mp3_file_path == '':
+            print('mp3ファイルのパスを入力してください')
+            return False
+        if not os.path.exists(self.mp3_file_path):
+            print('ファイルが見つかりませんでした。')
+            return False
+        _, ext = os.path.splitext(self.mp3_file_path)
+        if ext != '.mp3':
+            print('拡張子が{}です。mp3ファイルを指定してください。'.format(ext))
+            return False
+        return True
+
     def count_down(self):
         seconds = self.minutes * 60
+
         while seconds >= 0:
             seconds -= 1
             time.sleep(1)
