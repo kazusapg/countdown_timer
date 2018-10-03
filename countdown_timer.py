@@ -16,9 +16,8 @@ class CountDownTimer:
 
     def validate_arg_minutes(self):
         """引数の時間をチェック"""
-        if not type(self.minutes) == int:
-            return False
         if self.minutes < 0:
+            print('時間には0以上の整数を入力してください。')
             return False
         return True
 
@@ -37,6 +36,11 @@ class CountDownTimer:
         return True
 
     def count_down(self):
+        if not self.validate_arg_minutes():
+            return
+        if not self.validate_arg_mp3_filepath():
+            return
+
         seconds = self.minutes * 60
 
         while seconds >= 0:

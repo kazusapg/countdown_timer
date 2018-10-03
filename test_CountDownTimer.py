@@ -4,19 +4,7 @@ from countdown_timer import CountDownTimer
 
 
 class TestValidateArgMinutes(unittest.TestCase):
-
-    def test_validate_arg_minutes_correct(self):
-        c = CountDownTimer(1, 'test.mp3')
-        self.assertTrue(c.validate_arg_minutes())
-
-    def test_validate_arg_minutes_float(self):
-        c = CountDownTimer(1.1, 'test.mp3')
-        self.assertFalse(c.validate_arg_minutes())
-
-    def test_validate_arg_minutes_string(self):
-        c = CountDownTimer('1', 'test.mp3')
-        self.assertFalse(c.validate_arg_minutes())
-
+    
     def test_validate_arg_minutes_negative(self):
         c = CountDownTimer(-1, 'test.mp3')
         self.assertFalse(c.validate_arg_minutes())
