@@ -1,10 +1,11 @@
 # TODO:Pause機能
-# TODO:音楽の停止時間調整
+# TODO:README作成
 
 import argparse
 import time
 import sys
 import os
+from mutagen.mp3 import MP3
 import pygame
 
 
@@ -51,17 +52,20 @@ class CountDownTimer:
             if self.minutes < 0:
                 break
             time.sleep(1)
+
         pygame.mixer.init()
         pygame.mixer.music.load(self.mp3_file_path)
+        mp3_length = MP3(self.mp3_file_path).info.length
+
         print('\n時間になりました')
         print('終了するにはCtrl+Cを押して下さい')
 
         try:
             while True:
                 pygame.mixer.music.play(1)
-                if pygame.mixer.music.get_busy():
-                    time.sleep(1)
+                time.sleep(mp3_length + 0.1)
         except KeyboardInterrupt:
+            pygame.mixer_music.stop()
             sys.exit()
 
 
