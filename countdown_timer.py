@@ -1,5 +1,5 @@
 # TODO:Pause機能
-# TODO:残り時間の表示
+# TODO:音楽の停止時間調整
 
 import argparse
 import time
@@ -12,6 +12,7 @@ class CountDownTimer:
 
     def __init__(self, minutes, mp3_filepath):
         self.minutes = minutes
+        self.seconds = 0
         self.mp3_file_path = mp3_filepath
 
     def validate_arg_minutes(self):
@@ -41,17 +42,23 @@ class CountDownTimer:
         if not self.validate_arg_mp3_filepath():
             return
 
-        seconds = self.minutes * 60
-
-        while seconds >= 0:
-            seconds -= 1
+        while self.minutes >= 0 and self.seconds >= 0:
+            print('\r残り時間: {}:{:0>2}'.format(self.minutes, self.seconds), end='')
+            self.seconds -= 1
+            if self.seconds < 0:
+                self.minutes -= 1
+                self.seconds = 59
+            if self.minutes < 0:
+                break
             time.sleep(1)
         pygame.mixer.init()
         pygame.mixer.music.load(self.mp3_file_path)
-        print('時間になりました')
+        print('\n時間になりました')
+        print('終了するにはCtrl+Cを押して下さい')
+
         try:
             while True:
-                pygame.mixer.music.play(100)
+                pygame.mixer.music.play(1)
                 if pygame.mixer.music.get_busy():
                     time.sleep(1)
         except KeyboardInterrupt:
