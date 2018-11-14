@@ -1,5 +1,4 @@
 # TODO:Pause機能
-# TODO:README作成
 
 import argparse
 import time
